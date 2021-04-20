@@ -12,7 +12,7 @@ import com.google.gson.*;
 //For XML
 import org.jsoup.*; 
 import org.jsoup.parser.*; 
-import org.jsoup.nodes.Document;
+
 
 @Path("/Buyer") 
 
@@ -62,7 +62,7 @@ public class BuyerService
     String BuyerCode = BuyerObject.get("Buyer Code").getAsString(); 
     String BuyerName = BuyerObject.get("Buyer Name").getAsString(); 
     String BuyerEmail = BuyerObject.get("Buyer Email").getAsString(); 
-    String BuyerContactNumber =BuyerObject.get("Buyer Contact Number").getAsString(); 
+    String BuyerContactNumber = BuyerObject.get("Buyer Contact Number").getAsString(); 
     String BuyerAddress =BuyerObject.get("Buyer Address").getAsString(); 
     String output = BuyerObj.updateBuyer(BuyerID,BuyerCode, BuyerName, BuyerEmail,BuyerContactNumber,BuyerAddress);
     return output;
@@ -78,7 +78,7 @@ public class BuyerService
     org.jsoup.nodes.Document doc = Jsoup.parse( BuyerData, "", Parser.xmlParser()); 
     
    //Read the value from the element <itemID>
-    String BuyerID = doc.select("BuyerID").text();
+    String BuyerID = doc.select("Buyer ID").text();
     String output = BuyerObj.deleteBuyer(BuyerID);
     return output; 
    }

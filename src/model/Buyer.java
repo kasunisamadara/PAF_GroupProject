@@ -60,18 +60,19 @@ public class Buyer {
     //System.err.println(e.getMessage()); 
     } 
     return output; 
-} 
+    } 
     
+    //retrieve
     public String readBuyer() 
-{ 
+    { 
     String output = ""; 
-try
-{ 
+  try
+   { 
     Connection con = connect(); 
     if (con == null) 
-{
+   {
     	return "Error while connecting to the database for reading."; 
- } 
+   } 
 // Prepare the html table to be displayed
    output = "<table border='1'><tr><th>Buyer Code</th><th>Buyer Name</th>" + "<th>Buyer Email</th>" + "<th>Buyer Conatact Number</th>" +"<th>Buyer Address</th>" +"<th>Update</th><th>Remove</th></tr>"; 
 
@@ -80,7 +81,7 @@ try
     ResultSet rs = stmt.executeQuery(query); 
    // iterate through the rows in the result set
     while (rs.next()) 
-{ 
+   { 
     String BuyerID = Integer.toString(rs.getInt("Buyer ID")); 
     String BuyerCode = rs.getString("Buyer Code"); 
     String BuyerName = rs.getString("Buyer Name");
@@ -97,23 +98,28 @@ try
      
     // buttons
     output += "<td><input name='btnUpdate' type='button' value='Update' class='btn btn-secondary'></td>"+ "<td><form method='post' action='items.jsp'>"+ "<input name='btnRemove' type='submit' value='Remove' class='btn btn-danger'>"+ "<input name='itemID' type='hidden' value='" + BuyerID + "'>" + "</form></td></tr>"; 
-} 
+    } 
     con.close(); 
     // Complete the html table
     output += "</table>"; 
-} 
+    } 
     catch (Exception e) 
-{ 
+    { 
     output = "Error while reading Buyer."; 
-    System.err.println(e.getMessage()); 
-} 
+    e.printStackTrace();
+    //System.err.println(e.getMessage()); 
+    } 
     return output; 
-} 
+    } 
+    
+    
+    
+    //update
      public String updateBuyer(String ID, String code, String name, String email, String contactNumber, String address)
-{ 
+     { 
       String output = ""; 
       try
-{ 
+    { 
     Connection con = connect(); 
     if (con == null) 
    {
@@ -130,6 +136,9 @@ try
      preparedStmt.setString(4, address); 
      preparedStmt.setInt(5, Integer.parseInt(ID)); 
 
+     System.out.println(code);
+     System.out.println(name);
+     
      // execute the statement
      preparedStmt.execute(); 
      con.close(); 
@@ -137,37 +146,41 @@ try
      } 
      catch (Exception e) 
      { 
-     output = "Error while updating the Buyer."; 
-     System.err.println(e.getMessage()); 
+     output = "Error while updating the Buyer.";
+     e.printStackTrace();
+     //System.err.println(e.getMessage()); 
      } 
      return output; 
      } 
-     public String deleteBuyer(String BuyerID) 
-     { 
-     String output = ""; 
-     try
-     { 
-     Connection con = connect(); 
-      if (con == null) 
-     {
-    	return "Error while connecting to the database for deleting."; 
-      } 
+     
+     
+     //delete
+         public String deleteBuyer(String BuyerID) 
+         { 
+              String output = ""; 
+            try
+             { 
+               Connection con = connect(); 
+               if (con == null) 
+             {
+    	       return "Error while connecting to the database for deleting."; 
+              } 
       
-// create a prepared statement
-     String query = "delete from Buyer where Buyer ID=?"; 
-     PreparedStatement preparedStmt = con.prepareStatement(query); 
-// binding values
-     preparedStmt.setInt(1, Integer.parseInt(BuyerID)); 
-// execute the statement
-    preparedStmt.execute(); 
-    con.close(); 
-    output = "Deleted successfully"; 
-} 
-    catch (Exception e) 
-{ 
-    output = "Error while deleting the Buyer.";
-    System.err.println(e.getMessage());
-} 
-return output;
-}
+          // create a prepared statement
+             String query = "delete from Buyer where Buyer ID=?"; 
+             PreparedStatement preparedStmt = con.prepareStatement(query); 
+          // binding values
+             preparedStmt.setInt(1, Integer.parseInt(BuyerID)); 
+          // execute the statement
+             preparedStmt.execute(); 
+             con.close(); 
+              output = "Deleted successfully"; 
+              } 
+             catch (Exception e) 
+         { 
+             output = "Error while deleting the Buyer.";
+             System.err.println(e.getMessage());
+        } 
+         return output;
+   }
 }
